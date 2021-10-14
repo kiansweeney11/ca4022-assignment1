@@ -34,4 +34,4 @@ ratings = LOAD 'ml-latest-small/ratings.csv' USING CSVExcelStorage() AS (userId:
 
 -- store our data after cleaning
 
- STORE merged_drop_dup INTO 'movielens/processed_movieratings' USING CSVExcelStorage;
+STORE merged_drop_dup INTO 'ml-latest-small/processed_movieratings' USING CSVExcelStorage;
