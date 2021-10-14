@@ -2,7 +2,7 @@ cd $PIG_HOME
 
 unzip ml-latest-small.zip
 
-# local mode first to debug and test queries
+-- local mode first to debug and test queries
 
 pig -x local
 
@@ -13,8 +13,8 @@ movies = LOAD 'ml-latest-small/movies.csv' USING CSVExcelStorage() AS (movieId: 
 
 movies_cleaned = FOREACH movies GENERATE movieId, SUBSTRING($1, 0,(int)SIZE($1) - 7) AS title, REGEX_EXTRACT($1, '.*\\((.*)\\)', 1) AS year, STRSPLIT($2, '\\|') as genres;
 
-# not using links.csv - no real information to be gained from it 
-# tags.csv doesn't seem relevant either as nothing is asked about feedback from users bar ratings which is found in #ratings.csv
-# as a result we will merge only ratings.csv and movies.csv (our cleaned version of this)
+-- not using links.csv - no real information to be gained from it 
+--  tags.csv doesn't seem relevant either as nothing is asked about feedback from users bar ratings which is found in --ratings.csv
+--  as a result we will merge only ratings.csv and movies.csv (our cleaned version of this)
 
 
