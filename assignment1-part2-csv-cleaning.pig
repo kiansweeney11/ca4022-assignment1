@@ -18,3 +18,20 @@ movies_cleaned = FOREACH movies GENERATE movieId, SUBSTRING($1, 0,(int)SIZE($1) 
 --  as a result we will merge only ratings.csv and movies.csv (our cleaned version of this)
 
 
+-- merging movies and ratings
+
+ratings = LOAD 'ml-latest-small/ratings.csv' USING CSVExcelStorage() AS (userId: int, movieId: int, ratings: int, timestamp: long);
+
+-- remove timestamp column as it is not necessary for our queries
+
+ ratings_drop = FOREACH ratings generate $0, $1, $2;
+
+ -- now lets join our two cleaned files
+
+ merged = JOIN movies_cleaned BY movieId, ratings_drop BY movieId;
+
+ merged_drop_dup = FOREACH merged generate $0, $1, $2, $3, $4, $6;
+
+-- store our data after cleaning
+
+ STORE merged_drop_dup INTO 'movielens/processed_movieratings' USING CSVExcelStorage;
