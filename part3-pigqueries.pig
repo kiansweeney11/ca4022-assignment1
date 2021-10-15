@@ -15,6 +15,24 @@ C = LIMIT B 5;
 
 DUMP C;
 
+-- part2
+
+moviesavg = GROUP movieratings BY (movieId, title);
+
+avgmoviesavg = FOREACH moviesavg GENERATE group as title, AVG(movieratings.rating) as avgrating;
+
+D = ORDER avgmoviesavg BY avgrating DESC;
+
+filtered = FILTER avgmoviesavg by avgrating == 5;
+
+no5star = FOREACH (GROUP filtered ALL) GENERATE COUNT(filtered);
+
+dump no5star;
+
+E = LIMIT D 10;
+
+DUMP E;
+
 -- part3
 
 user = GROUP movieratings BY userId;
