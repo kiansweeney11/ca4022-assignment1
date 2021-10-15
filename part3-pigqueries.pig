@@ -1,7 +1,7 @@
 
 -- local
 
- --part1 
+-- part1 
 
 movieratings = LOAD 'file:/home/sweenk27/ca4022/pig-0.17.0/ml-latest-small/processed_movieratings' USING CSVExcelStorage() AS (movieId: int, title: chararray,  year: int, genres: chararray,  userId: int, rating: int);
 
@@ -23,15 +23,19 @@ avgmoviesavg = FOREACH moviesavg GENERATE group as title, AVG(movieratings.ratin
 
 D = ORDER avgmoviesavg BY avgrating DESC;
 
+E = LIMIT D 10;
+
+DUMP E;
+
+-- there appears to be a lot of movies with an average rating of 5 star. let's check how many exactly
+
 filtered = FILTER avgmoviesavg by avgrating == 5;
 
 no5star = FOREACH (GROUP filtered ALL) GENERATE COUNT(filtered);
 
 dump no5star;
 
-E = LIMIT D 10;
-
-DUMP E;
+-- 296 movies have an average rating of 5 star!
 
 -- part3
 
