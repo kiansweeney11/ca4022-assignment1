@@ -48,3 +48,34 @@ D = ORDER avguser BY avgrating DESC;
 E = LIMIT D 10;
 
 DUMP E;
+
+-- mapreduce
+
+-- q3 part1
+
+REGISTER /home/sweenk27/ca4022/pig-0.17.0/contrib/piggybank/java/piggybank.jar;
+DEFINE CSVExcelStorage org.apache.pig.piggybank.storage.CSVExcelStorage;
+
+mov = LOAD 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/processed_movieratings_fix' USING CSVExcelStorage() AS (movieId: int, title: chararray,  year: int, genres: chararray,  userId: int, rating: int);
+
+-- same steps as local for q3 part1 
+
+STORE C INTO 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/q3part1' using CSVExcelStorage;
+
+-- q3 part2
+
+
+
+-- q3 part3
+
+mov = LOAD 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/processed_movieratings_fix' USING CSVExcelStorage() AS (movieId: int, title: chararray,  year: int, genres: chararray,  userId: int, mov2: int, rating: int );
+
+user = GROUP mov BY userId;
+
+avguser = FOREACH user GENERATE group as userId, AVG(mov.rating) as avgrating;
+
+D = ORDER avguser BY avgrating DESC;
+
+E = LIMIT D 10;
+
+-- DUMP E, user id 53 has highest average rating with a 5 star average.
