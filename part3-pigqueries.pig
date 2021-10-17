@@ -1,13 +1,16 @@
+-- mapreduce
 
--- local
+-- q3 part1
 
--- part1 
+REGISTER /home/sweenk27/ca4022/pig-0.17.0/contrib/piggybank/java/piggybank.jar;
+DEFINE CSVExcelStorage org.apache.pig.piggybank.storage.CSVExcelStorage;
+DEFINE CSVLoader org.apache.pig.piggybank.storage.CSVLoader();
 
-movieratings = LOAD 'file:/home/sweenk27/ca4022/pig-0.17.0/ml-latest-small/processed_movieratings' USING CSVExcelStorage() AS (movieId: int, title: chararray,  year: int, genres: chararray,  userId: int, rating: int);
+mov = LOAD 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/processed_movieratings_fix' USING CSVExcelStorage() AS (movieId: int, title: chararray,  year: int, genres: chararray,  userId: int, rating: int);
 
-grouped = GROUP movieratings BY title;
+grouped = GROUP mov BY title;
 
-count = FOREACH grouped GENERATE $0, COUNT(movieratings) as countratings;
+count = FOREACH grouped GENERATE $0, COUNT(mov) as countratings;
 
 B = ORDER count BY countratings DESC;
 
@@ -15,7 +18,11 @@ C = LIMIT B 5;
 
 DUMP C;
 
--- part2
+STORE C INTO 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/q3part1' using CSVExcelStorage;
+
+-- q3 part2
+
+CREATE TABLE moviesratings (movieId INT, title STRING, year INT, genres STRING, userID INT, mov2 INT, rating INT)
 
 moviesavg = GROUP movieratings BY (movieId, title);
 
@@ -36,35 +43,6 @@ no5star = FOREACH (GROUP filtered ALL) GENERATE COUNT(filtered);
 dump no5star;
 
 -- 296 movies have an average rating of 5 star!
-
--- part3
-
-user = GROUP movieratings BY userId;
-
-avguser = FOREACH user GENERATE group as userId, AVG(movieratings.rating) as avgrating;
-
-D = ORDER avguser BY avgrating DESC;
-
-E = LIMIT D 10;
-
-DUMP E;
-
--- mapreduce
-
--- q3 part1
-
-REGISTER /home/sweenk27/ca4022/pig-0.17.0/contrib/piggybank/java/piggybank.jar;
-DEFINE CSVExcelStorage org.apache.pig.piggybank.storage.CSVExcelStorage;
-
-mov = LOAD 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/processed_movieratings_fix' USING CSVExcelStorage() AS (movieId: int, title: chararray,  year: int, genres: chararray,  userId: int, rating: int);
-
--- same steps as local for q3 part1 
-
-STORE C INTO 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/q3part1' using CSVExcelStorage;
-
--- q3 part2
-
-
 
 -- q3 part3
 
