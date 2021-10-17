@@ -3,26 +3,26 @@ CREATE TABLE mvrating (movieId INT, title STRING, year INT, genres STRING, userI
 
 LOAD DATA INPATH 'hdfs://localhost:9000/user/sweenk27/ml-latest-small/processed_movieratings_fix' OVERWRITE INTO TABLE mvrating;
 
-/*=verify table working=*/
+-- verify table working
 
 SELECT * FROM mvrating LIMIT 25;
 
-/*=q4 part1=*/
+-- q4 part1
 
 SELECT title, COUNT(rating) as count_rating FROM mvrating
 GROUP BY title
 ORDER BY count_rating DESC LIMIT 10;
 
-/*=q4 part2=*/
+-- q4 part2
 
 SELECT title, AVG(rating) as avgrating, COUNT(rating) as numrating FROM mvrating
 GROUP BY title
 HAVING avgrating >= 4.9
 ORDER BY numrating DESC LIMIT 10;
 
-/*=ran this command at 4.0, 4.5 and 4.9 avgrating intervals=*/
+-- ran this command at 4.0, 4.5 and 4.9 avgrating intervals
 
-/*=q4 part3=*/
+-- q4 part3
 SELECT userId, AVG(rating) as avgrating FROM mvrating
 GROUP BY userId
 ORDER BY avgrating DESC LIMIT 10;
