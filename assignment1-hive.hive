@@ -23,14 +23,17 @@ ORDER BY numrating DESC LIMIT 10;
 -- ran this command at 4.0, 4.5 and 4.9 avgrating intervals
 
 -- q4 part3
+
 SELECT userId, AVG(rating) as avgrating FROM mvrating
 GROUP BY userId
 ORDER BY avgrating DESC LIMIT 10;
 
 -- q5 part1
+
 SELECT rating, count(*) as c FROM mvrating GROUP BY rating;
 
 -- q5 part2
+
 SELECT rating, count(*) as c FROM mvrating GROUP BY rating;
 ORDER BY c DESC LIMIT 1;
 

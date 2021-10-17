@@ -18,7 +18,7 @@ ratings = LOAD 'ml-latest-small/ratings.csv' using PigStorage(',') AS (userId: i
 
 ratings_drop = FOREACH ratings generate userId, movieId, ratings;
 
- merged = JOIN movies_cleaned BY movieId, ratings_drop BY movieId;
+merged = JOIN movies_cleaned BY movieId, ratings_drop BY movieId;
 
 STORE merged INTO 'ml-latest-small/processed_movieratings_fix' USING PigStorage('|');
 
