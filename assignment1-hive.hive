@@ -34,5 +34,5 @@ SELECT rating, count(*) as c FROM mvrating GROUP BY rating;
 
 -- q5 part2
 
-SELECT rating, count(*) as c FROM mvrating GROUP BY rating;
+SELECT rating, count(*) as c FROM mvrating GROUP BY rating
 ORDER BY c DESC LIMIT 1;

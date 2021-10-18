@@ -22,4 +22,4 @@ merged = JOIN movies_cleaned BY movieId, ratings_drop BY movieId;
 
 STORE merged INTO 'ml-latest-small/processed_movieratings_fix' USING PigStorage('|');
 
--- test if it works: dump mov;
+-- test if it works: dump merged;
