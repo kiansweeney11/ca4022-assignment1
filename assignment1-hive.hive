@@ -41,3 +41,6 @@ ORDER BY c DESC LIMIT 1;
 
 SELECT count(*) FROM mvrating WHERE genres rlike '.*Comedy.*';
 -- replace comedy with each genre for number of reviews relating to this genre type
+
+SELECT avg(rating) FROM mvrating WHERE genres rlike '.*Comedy.*';
+-- replace comedy with other genres for all results
