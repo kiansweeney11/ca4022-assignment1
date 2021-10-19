@@ -36,3 +36,8 @@ SELECT rating, count(*) as c FROM mvrating GROUP BY rating;
 
 SELECT rating, count(*) as c FROM mvrating GROUP BY rating
 ORDER BY c DESC LIMIT 1;
+
+-- q5 part3
+
+SELECT count(*) FROM mvrating WHERE genres rlike '.*Comedy.*';
+-- replace comedy with each genre for number of reviews relating to this genre type
