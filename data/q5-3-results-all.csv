@@ -1,4 +1,4 @@
-﻿,Count,Average
+Genre,Count,Average
 Adventure,24161,3.3557799
 Animation,6988,3.46722915
 Children,9208,3.265638
@@ -17,3 +17,4 @@ Musical,1219,3.425809
 Documentary,4145,3.617719
 IMAX,1930,3.427744
 Western,870,3.462694
+Film-Noir,870,3.77471264
