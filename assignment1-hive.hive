@@ -24,7 +24,7 @@ ORDER BY numrating DESC LIMIT 10;
 
 -- q4 part3
 
-SELECT userId, AVG(rating) as avgrating FROM mvrating
+SELECT userId, AVG(rating) as avgrating, COUNT(rating) as count_rating FROM mvrating
 GROUP BY userId
 ORDER BY avgrating DESC LIMIT 10;
 
